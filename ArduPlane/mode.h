@@ -70,7 +70,7 @@ public:
 #if MODE_AUTOLAND_ENABLED
         AUTOLAND      = 26,
 #endif
-
+        SMART_RTL = 28,
     // Mode number 30 reserved for "offboard" for external/lua control.
     };
 
@@ -1073,3 +1073,44 @@ protected:
 };
 
 #endif
+
+
+class ModeSmartRTL : public ModeRTL  
+{  
+public:
+    // inherit constructor
+    using ModeRTL::Mode;
+    
+    Number mode_number() const override { return Number::SMART_RTL; }  
+    const char *name() const override { return "SmartRTL"; }  
+    const char *name4() const override { return "SRTL"; }  
+  
+    bool does_auto_navigation() const override { return true; }  
+    bool does_auto_throttle() const override { return true; }  
+    bool allows_throttle_nudging() const override { return true; }  
+  
+    void update() override;  
+    void navigate() override;  
+  
+    void save_position();  
+  
+protected:  
+    bool _enter() override;  
+    void _exit() override;  
+    bool _pre_arm_checks(size_t buflen, char *buffer) const override { return false; }  
+  
+private:  
+    enum class SubMode : uint8_t {  
+        WAIT_FOR_PATH_CLEANUP,  
+        PATH_FOLLOW,  
+        LOITER_OR_LAND,   // fin de trajectoire : loiter au-dessus de home ou QRTL  
+    };  
+  
+    void set_submode(SubMode submode);  
+    void wait_cleanup_run();  
+    void path_follow_run();  
+  
+    SubMode _state = SubMode::WAIT_FOR_PATH_CLEANUP;  
+    Vector3p dest_NED_backup;   // point restauré si on quitte le mode prématurément  
+    uint32_t path_follow_last_pop_fail_ms;  
+};

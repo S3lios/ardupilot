@@ -65,6 +65,9 @@ void GCS_Plane::update_vehicle_sensor_status_flags(void)
     case Mode::Number::GUIDED:
     case Mode::Number::CIRCLE:
     case Mode::Number::TAKEOFF:
+#if MODE_SMARTRTL_ENABLED
+    case Mode::Number::SMART_RTL:
+#endif
 #if MODE_AUTOLAND_ENABLED
     case Mode::Number::AUTOLAND:
 #endif
@@ -85,6 +88,7 @@ void GCS_Plane::update_vehicle_sensor_status_flags(void)
 
     case Mode::Number::INITIALISING:
         break;
+
     }
 
     if (rate_controlled) {
@@ -124,4 +128,5 @@ void GCS_Plane::update_vehicle_sensor_status_flags(void)
         }
     }
 #endif
+    
 }

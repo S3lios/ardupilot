@@ -93,6 +93,9 @@ void Plane::rc_failsafe_short_on_event()
     case Mode::Number::CIRCLE:  // these modes never take any short failsafe action and continue
     case Mode::Number::TAKEOFF:
     case Mode::Number::RTL:
+#if MODE_SMARTRTL_ENABLED
+    case Mode::Number::SMART_RTL:
+#endif
 #if HAL_QUADPLANE_ENABLED
     case Mode::Number::QLAND:
     case Mode::Number::QRTL:
@@ -158,7 +161,15 @@ void Plane::failsafe_long_on_event(enum failsafe_state fstype, ModeReason reason
                set_mode(mode_rtl, reason);
             }
 #endif
-        } else {
+        } 
+#if MODE_SMARTRTL_ENABLED
+        else if (g.fs_action_long == FS_ACTION_LONG_SMART_RTL) {
+            if (!set_mode(mode_smartrtl, reason)) {
+               set_mode(mode_rtl, reason);
+            }
+        }
+ #endif
+        else {
             set_mode(mode_rtl, reason);
         }
         break;
@@ -216,8 +227,18 @@ void Plane::failsafe_long_on_event(enum failsafe_state fstype, ModeReason reason
         } else if (g.fs_action_long == FS_ACTION_LONG_RTL) {
             set_mode(mode_rtl, reason);
         }
+#if MODE_SMARTRTL_ENABLED
+        else if (g.fs_action_long == FS_ACTION_LONG_SMART_RTL) {
+            if (!set_mode(mode_smartrtl, reason)) {
+               set_mode(mode_rtl, reason);
+            }
+        }
+#endif
         break;
     case Mode::Number::RTL:
+#if MODE_SMARTRTL_ENABLED
+    case Mode::Number::SMART_RTL:
+#endif
         if (g.fs_action_long == FS_ACTION_LONG_AUTO) {
             set_mode(mode_auto, reason);
 #if MODE_AUTOLAND_ENABLED

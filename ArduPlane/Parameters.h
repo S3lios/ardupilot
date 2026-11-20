@@ -574,6 +574,10 @@ public:
     AP_Follow follow;
 #endif
 
+#if MODE_SMARTRTL_ENABLED  
+    AP_SmartRTL smart_rtl;  
+#endif
+
     AP_Float        fs_ekf_thresh;
 
     // min initial climb in RTL
@@ -595,6 +599,8 @@ public:
 #if AP_PLANE_SYSTEMID_ENABLED
     AP_SystemID systemid;
 #endif
+
+
 };
 
 extern const AP_Param::Info var_info[];

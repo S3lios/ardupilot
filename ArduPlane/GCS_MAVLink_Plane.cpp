@@ -59,6 +59,9 @@ uint8_t GCS_MAVLINK_Plane::base_mode() const
     case Mode::Number::GUIDED:
     case Mode::Number::CIRCLE:
     case Mode::Number::TAKEOFF:
+#if MODE_SMARTRTL_ENABLED
+    case Mode::Number::SMART_RTL:
+#endif
 #if MODE_AUTOLAND_ENABLED
     case Mode::Number::AUTOLAND:
 #endif

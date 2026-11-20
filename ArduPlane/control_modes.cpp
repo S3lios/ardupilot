@@ -98,7 +98,11 @@ Mode *Plane::mode_from_mode_num(const enum Mode::Number num)
         ret = &mode_loiter_qland;
         break;
 #endif  // HAL_QUADPLANE_ENABLED
-
+#if MODE_SMARTRTL_ENABLED
+    case Mode::Number::SMART_RTL:
+        ret = &mode_smartrtl;
+        break;
+#endif
     }
     return ret;
 }

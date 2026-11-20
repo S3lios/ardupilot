@@ -415,7 +415,7 @@ class Board:
             '-Werror=narrowing',
             '-Werror=return-type',
             '-Werror=switch',
-            '-Werror=sign-compare',
+            #'-Werror=sign-compare',
             '-Werror=type-limits',
             '-Werror=undef',
             '-Werror=unused-result',

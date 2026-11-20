@@ -75,6 +75,7 @@
 
 #include <AP_Rally/AP_Rally.h>
 
+#include <AP_SmartRTL/AP_SmartRTL.h>        // ArduPilot Smart Return To Launch Mode (SRTL) library
 #include <AP_OpticalFlow/AP_OpticalFlow.h>     // Optical Flow library
 #include <AP_Parachute/AP_Parachute.h>
 #include <AP_ADSB/AP_ADSB.h>
@@ -185,6 +186,9 @@ public:
 #endif
 #if AP_PLANE_SYSTEMID_ENABLED
     friend class AP_SystemID;
+#endif
+#if MODE_SMARTRTL_ENABLED
+    friend class ModeSmartRTL;
 #endif
 
     Plane(void);
@@ -334,6 +338,10 @@ private:
 #endif
 #if HAL_SOARING_ENABLED
     ModeThermal mode_thermal;
+#endif
+
+#if MODE_SMARTRTL_ENABLED  
+    ModeSmartRTL mode_smartrtl;  
 #endif
 
 #if AP_QUICKTUNE_ENABLED

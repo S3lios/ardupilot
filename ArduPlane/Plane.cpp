@@ -87,6 +87,9 @@ const AP_Scheduler::Task Plane::scheduler_tasks[] = {
     SCHED_TASK_CLASS(AP_ServoRelayEvents, &plane.ServoRelayEvents, update_events, 50, 150,  63),
 #endif
     SCHED_TASK_CLASS(AP_BattMonitor, &plane.battery, read,   10, 300,  66),
+#if MODE_SMARTRTL_ENABLED
+    SCHED_TASK_CLASS(ModeSmartRTL,         &plane.mode_smartrtl,       save_position,    3, 100,  70),
+#endif
 #if AP_RANGEFINDER_ENABLED
     SCHED_TASK(read_rangefinder,       50,    100, 78),
 #endif

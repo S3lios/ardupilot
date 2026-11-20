@@ -1181,6 +1181,7 @@ const AP_Param::GroupInfo ParametersG2::var_info[] = {
     // @User: Standard
     AP_GROUPINFO("RTL_CLIMB_MIN", 27, ParametersG2, rtl_climb_min, 0),
 
+
 #if AP_PLANE_OFFBOARD_GUIDED_SLEW_ENABLED
     // @Group: GUIDED_
     // @Path: ../libraries/AC_PID/AC_PID.cpp
@@ -1279,6 +1280,11 @@ const AP_Param::GroupInfo ParametersG2::var_info[] = {
     // @User: Advanced
     AP_GROUPINFO("GUIDED_TIMEOUT", 40, ParametersG2, guided_timeout, 3.0f),
 
+#if MODE_SMARTRTL_ENABLED
+    // @Group: SRTL_
+    // @Path: ../libraries/AP_SmartRTL/AP_SmartRTL.cpp
+    AP_SUBGROUPINFO(smart_rtl, "SRTL_", 41, ParametersG2, AP_SmartRTL),
+#endif
     AP_GROUPEND
 };
 

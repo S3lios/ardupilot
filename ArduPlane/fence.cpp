@@ -114,12 +114,17 @@ void Plane::fence_check()
             break;
 
         case AC_Fence::Action::ALWAYS_LAND:
-        case AC_Fence::Action::SMART_RTL:
-        case AC_Fence::Action::SMART_RTL_OR_LAND:
         case AC_Fence::Action::BRAKE:
             // invalid enumeration value for Plane
             break;
 
+        case AC_Fence::Action::SMART_RTL:
+        case AC_Fence::Action::SMART_RTL_OR_LAND:
+            if (!plane.set_mode(plane.mode_smartrtl, ModeReason::FENCE_BREACHED)) {
+                // smartRTL failed to start, fallback to RTL
+                plane.set_mode(plane.mode_rtl, ModeReason::FENCE_BREACHED);
+            }
+            break;
         case AC_Fence::Action::AUTOLAND_OR_RTL:
         case AC_Fence::Action::RTL_AND_LAND:
             if (control_mode == &mode_auto &&

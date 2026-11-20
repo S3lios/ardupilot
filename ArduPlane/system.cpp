@@ -171,6 +171,12 @@ void Plane::init_ardupilot()
     g2.ice_control.init();
 #endif
 
+#if MODE_SMARTRTL_ENABLED
+    // initialize SmartRTL
+    g2.smart_rtl.init();
+#endif
+
+
 }
 
 #if AP_FENCE_ENABLED

@@ -35,6 +35,14 @@
 #ifndef FLAP_2_SPEED
  # define FLAP_2_SPEED 0
 #endif
+
+//////////////////////////////////////////////////////////////////////////////
+// SmartRTL - allows vehicle to retrace a (loop-eliminated) breadcrumb home
+#ifndef MODE_SMARTRTL_ENABLED
+# define MODE_SMARTRTL_ENABLED 1
+#endif
+
+
 //////////////////////////////////////////////////////////////////////////////
 // FLIGHT_MODE
 // FLIGHT_MODE_CHANNEL

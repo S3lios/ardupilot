@@ -308,6 +308,10 @@ bool AP_Arming_Plane::arm(const AP_Arming::Method method, const bool do_arming_c
     plane.mode_autoland.arm_check();
 #endif
 
+#if MODE_SMARTRTL_ENABLED
+    plane.g2.smart_rtl.set_home(!(plane.current_loc.lat == 0 && plane.current_loc.lng == 0));
+#endif
+
     if (method == AP_Arming::Method::RUDDER) {
         // initialise the timer used to warn the user they're holding
         // their stick over:
